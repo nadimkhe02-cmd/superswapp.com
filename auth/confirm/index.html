@@ -3,34 +3,103 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SuperSwap — Email Confirmed</title>
+<title>SuperSwap — Confirming Email</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, sans-serif; background: #f5f4f2; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-  .card { background: #fff; border-radius: 20px; padding: 48px 32px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
-  .check { width: 64px; height: 64px; background: #1A6840; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 28px; color: #fff; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f4f2; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .card { background: #fff; border-radius: 20px; padding: 48px 32px; max-width: 400px; width: 100%; text-align: center; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+  .icon { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 28px; color: #fff; }
+  .icon-success { background: #1A6840; }
+  .icon-loading { background: #C8111A; }
+  .icon-error { background: #B45A00; }
   h1 { font-size: 22px; font-weight: 700; color: #111; margin-bottom: 8px; }
   p { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 24px; }
   .btn { display: inline-block; background: #C8111A; color: #fff; padding: 14px 32px; border-radius: 30px; font-size: 14px; font-weight: 700; text-decoration: none; }
+  .spinner { animation: spin 1s linear infinite; display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 </style>
-<script>
-  // Handle the auth confirmation token from Supabase
-  const hash = window.location.hash;
-  if (hash && hash.includes('access_token')) {
-    // Token is in the URL hash — confirmation was successful
-    document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById('status').textContent = 'Email Confirmed!';
-      document.getElementById('msg').textContent = 'Your email has been verified. You can now open the SuperSwap app and sign in.';
-    });
-  }
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 <div class="card">
-  <div class="check">✓</div>
-  <h1 id="status">Email Confirmed!</h1>
-  <p id="msg">Your email has been verified. You can now open the SuperSwap app and sign in. Your account is pending admin approval.</p>
-  <a class="btn" href="/">Back to SuperSwap</a>
+  <div class="icon icon-loading" id="iconEl"><span class="spinner">✈</span></div>
+  <h1 id="status">Confirming your email...</h1>
+  <p id="msg">Please wait while we verify your account.</p>
+  <a class="btn" href="/" id="btnEl" style="display:none">Back to SuperSwap</a>
 </div>
+
+<script>
+(async function() {
+  const SUPABASE_URL = "https://xfagyunaxbnkcwtufykl.supabase.co";
+  const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmYWd5dW5heGJua2N3dHVmeWtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3MDE0ODEsImV4cCI6MjA5MDI3NzQ4MX0.1jVOqNflE7CnhOWHyTG_V5mgy2HG6JUAl4Dz8vmL9yk";
+
+  const iconEl = document.getElementById('iconEl');
+  const statusEl = document.getElementById('status');
+  const msgEl = document.getElementById('msg');
+  const btnEl = document.getElementById('btnEl');
+
+  function showSuccess() {
+    iconEl.className = 'icon icon-success';
+    iconEl.innerHTML = '✓';
+    statusEl.textContent = 'Email Confirmed!';
+    msgEl.textContent = 'Your email has been verified. You can now open the SuperSwap app and sign in. Your account is pending admin approval.';
+    btnEl.style.display = 'inline-block';
+  }
+
+  function showError(msg) {
+    iconEl.className = 'icon icon-error';
+    iconEl.innerHTML = '!';
+    statusEl.textContent = 'Confirmation Failed';
+    msgEl.textContent = msg || 'The confirmation link may have expired. Please try signing up again.';
+    btnEl.style.display = 'inline-block';
+    btnEl.textContent = 'Back to SuperSwap';
+  }
+
+  try {
+    // Supabase sends tokens in the URL hash or as query params
+    // Format: #access_token=xxx&refresh_token=xxx&type=signup
+    // Or: ?token=xxx&type=signup
+    const hash = window.location.hash.substring(1);
+    const params = new URLSearchParams(hash || window.location.search);
+
+    const accessToken = params.get('access_token');
+    const refreshToken = params.get('refresh_token');
+    const type = params.get('type');
+    const tokenHash = params.get('token_hash');
+    const token = params.get('token');
+
+    if (accessToken) {
+      // Token-based confirmation (already confirmed by Supabase redirect)
+      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+      const { data, error } = await sb.auth.setSession({
+        access_token: accessToken,
+        refresh_token: refreshToken || '',
+      });
+      if (error) {
+        showError(error.message);
+      } else {
+        showSuccess();
+      }
+    } else if (tokenHash || token) {
+      // OTP/magic link style confirmation
+      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+      const { data, error } = await sb.auth.verifyOtp({
+        token_hash: tokenHash || token,
+        type: type || 'email',
+      });
+      if (error) {
+        showError(error.message);
+      } else {
+        showSuccess();
+      }
+    } else {
+      // No token found — maybe direct visit
+      showError('No confirmation token found. Please use the link from your email.');
+    }
+  } catch (err) {
+    showError('An error occurred: ' + err.message);
+  }
+})();
+</script>
 </body>
 </html>
