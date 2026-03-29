@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SuperSwap — Email Confirmed</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, sans-serif; background: #f5f4f2; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+  .card { background: #fff; border-radius: 20px; padding: 48px 32px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+  .check { width: 64px; height: 64px; background: #1A6840; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 28px; color: #fff; }
+  h1 { font-size: 22px; font-weight: 700; color: #111; margin-bottom: 8px; }
+  p { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 24px; }
+  .btn { display: inline-block; background: #C8111A; color: #fff; padding: 14px 32px; border-radius: 30px; font-size: 14px; font-weight: 700; text-decoration: none; }
+</style>
+<script>
+  // Handle the auth confirmation token from Supabase
+  const hash = window.location.hash;
+  if (hash && hash.includes('access_token')) {
+    // Token is in the URL hash — confirmation was successful
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('status').textContent = 'Email Confirmed!';
+      document.getElementById('msg').textContent = 'Your email has been verified. You can now open the SuperSwap app and sign in.';
+    });
+  }
+</script>
+</head>
+<body>
+<div class="card">
+  <div class="check">✓</div>
+  <h1 id="status">Email Confirmed!</h1>
+  <p id="msg">Your email has been verified. You can now open the SuperSwap app and sign in. Your account is pending admin approval.</p>
+  <a class="btn" href="/">Back to SuperSwap</a>
+</div>
+</body>
+</html>
