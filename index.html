@@ -6,12 +6,43 @@
 <title>SuperSwap — Crew Scheduling Coordination</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #C8111A; color: #fff; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-  .card { background: rgba(255,255,255,0.08); backdrop-filter: blur(20px); border-radius: 24px; padding: 48px 36px; max-width: 420px; width: 90%; text-align: center; border: 1px solid rgba(255,255,255,0.12); }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #C8111A; color: #fff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 16px; }
+  .card { background: rgba(255,255,255,0.08); backdrop-filter: blur(20px); border-radius: 24px; padding: 48px 36px; max-width: 520px; width: 90%; text-align: center; border: 1px solid rgba(255,255,255,0.12); }
   h1 { font-size: 28px; font-weight: 800; letter-spacing: 3px; margin-bottom: 8px; }
+  h2 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
   .sub { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 32px; line-height: 1.6; }
   .icon { font-size: 48px; margin-bottom: 20px; }
   .btn { display: inline-block; background: #fff; color: #C8111A; padding: 14px 32px; border-radius: 30px; font-size: 14px; font-weight: 700; text-decoration: none; letter-spacing: 0.5px; }
+  .divider { width: 60px; height: 1px; background: rgba(255,255,255,0.15); margin: 32px auto; }
+
+  /* Support Section */
+  .support { text-align: left; margin-top: 8px; }
+  .support p { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.8; }
+  .email-link { color: #fff; font-weight: 600; }
+
+  /* FAQ */
+  .faq { text-align: left; margin: 20px 0; }
+  .faq details { margin-bottom: 10px; }
+  .faq summary { font-size: 14px; font-weight: 600; cursor: pointer; padding: 8px 0; }
+  .faq p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.7; padding: 4px 0 8px 12px; }
+
+  /* Contact Form */
+  .form-section { margin-top: 24px; text-align: left; }
+  .form-section label { font-size: 13px; font-weight: 600; display: block; margin-bottom: 6px; margin-top: 14px; }
+  .form-section input,
+  .form-section textarea { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: #fff; font-family: inherit; font-size: 14px; outline: none; }
+  .form-section input::placeholder,
+  .form-section textarea::placeholder { color: rgba(255,255,255,0.4); }
+  .form-section input:focus,
+  .form-section textarea:focus { border-color: rgba(255,255,255,0.5); }
+  .form-section textarea { resize: vertical; min-height: 100px; }
+  .submit-btn { display: inline-block; background: #fff; color: #C8111A; padding: 12px 28px; border-radius: 30px; font-size: 14px; font-weight: 700; border: none; cursor: pointer; letter-spacing: 0.5px; margin-top: 18px; width: 100%; }
+  .submit-btn:hover { opacity: 0.9; }
+
+  /* Success message */
+  .form-success { display: none; text-align: center; padding: 20px 0; }
+  .form-success p { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.8; }
+
   .links { margin-top: 32px; font-size: 12px; }
   .links a { color: rgba(255,255,255,0.5); text-decoration: underline; margin: 0 10px; }
 </style>
@@ -22,11 +53,70 @@
   <h1>SUPERSWAP</h1>
   <p class="sub">Crew scheduling coordination tool.<br>Available on iOS and Android.</p>
   <a class="btn" href="#">Download the App</a>
+
+  <div class="divider"></div>
+
+  <!-- Support Section -->
+  <div class="support">
+    <h2>Support</h2>
+    <p>Need help with SuperSwap? Use the form below or email us directly at <a class="email-link" href="mailto:nadim@superswapp.com">nadim@superswapp.com</a>. We typically respond within 24 hours.</p>
+  </div>
+
+  <div class="faq">
+    <h2>FAQ</h2>
+    <details>
+      <summary>What is SuperSwap?</summary>
+      <p>SuperSwap is a crew scheduling coordination tool that allows airline flight crew to view, request, and manage shift swaps with colleagues.</p>
+    </details>
+    <details>
+      <summary>Who can use SuperSwap?</summary>
+      <p>SuperSwap is designed for airline crew members including Captains, First Officers, and scheduling administrators within their organisation.</p>
+    </details>
+    <details>
+      <summary>How do I log in?</summary>
+      <p>Use the credentials provided by your company administrator. If you're having trouble logging in, contact your admin or reach out to us below.</p>
+    </details>
+    <details>
+      <summary>Is the app free?</summary>
+      <p>Yes, SuperSwap is completely free to download and use. There are no in-app purchases or subscription fees.</p>
+    </details>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Contact Form -->
+  <div class="form-section" id="contactForm">
+    <h2>Contact Us</h2>
+    <form action="https://formsubmit.co/nadim@superswapp.com" method="POST">
+      <input type="hidden" name="_subject" value="SuperSwap Support Request">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://superswapp.com?sent=1">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Your name" required>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Your email" required>
+      <label for="message">Message</label>
+      <textarea id="message" name="message" placeholder="How can we help?" required></textarea>
+      <button type="submit" class="submit-btn">Send Message</button>
+    </form>
+  </div>
+
+  <div class="form-success" id="formSuccess">
+    <h2>Message Sent</h2>
+    <p>Thank you for reaching out. We'll get back to you within 24 hours.</p>
+  </div>
+
   <div class="links">
-    <a href="/support">Support</a>
     <a href="/privacy">Privacy Policy</a>
     <a href="/terms">Terms of Service</a>
   </div>
 </div>
+
+<script>
+  if (new URLSearchParams(window.location.search).get('sent') === '1') {
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }
+</script>
 </body>
 </html>
