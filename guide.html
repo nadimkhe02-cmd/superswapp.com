@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SuperSwap — User Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #222; line-height: 1.7; }
+  .hero { background: #C8111A; color: #fff; padding: 48px 20px; text-align: center; }
+  .hero h1 { font-size: 28px; font-weight: 800; letter-spacing: 3px; margin-bottom: 8px; }
+  .hero p { font-size: 14px; color: rgba(255,255,255,0.7); }
+  .content { max-width: 680px; margin: 0 auto; padding: 40px 20px 60px; }
+  h2 { font-size: 20px; font-weight: 800; margin: 36px 0 16px; color: #C8111A; border-bottom: 2px solid #f0f0f0; padding-bottom: 8px; }
+  h3 { font-size: 16px; font-weight: 700; margin: 24px 0 10px; color: #111; }
+  p, li { font-size: 14px; margin-bottom: 10px; }
+  ul, ol { padding-left: 20px; margin-bottom: 16px; }
+  li { margin-bottom: 6px; }
+  strong { color: #111; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 13px; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #eee; }
+  th { background: #f8f8f8; font-weight: 700; color: #555; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; }
+  .badge-blue { background: rgba(26,74,122,0.1); color: #1A4A7A; }
+  .badge-gold { background: rgba(200,169,106,0.15); color: #8B6914; }
+  .tip { background: #FFF8F0; border-left: 3px solid #C8111A; padding: 12px 16px; margin: 16px 0; border-radius: 0 8px 8px 0; font-size: 13px; }
+  .tip strong { color: #C8111A; }
+  .section-icon { font-size: 24px; margin-right: 8px; vertical-align: middle; }
+  .nav-back { display: inline-block; margin: 20px; font-size: 13px; color: #C8111A; text-decoration: none; font-weight: 600; }
+  .nav-back:hover { text-decoration: underline; }
+  .privacy-box { background: #f4f4f4; border-radius: 12px; padding: 20px; margin: 16px 0; }
+  .privacy-box li { font-size: 13px; margin-bottom: 8px; }
+  .footer { text-align: center; padding: 32px 20px; font-size: 12px; color: #888; border-top: 1px solid #eee; }
+  .footer a { color: #C8111A; text-decoration: none; }
+  @media (max-width: 480px) {
+    .hero { padding: 32px 16px; }
+    .hero h1 { font-size: 22px; }
+    .content { padding: 24px 16px 48px; }
+  }
+</style>
+</head>
+<body>
+
+<a href="/" class="nav-back">&larr; Back to Home</a>
+
+<div class="hero">
+  <h1>USER GUIDE</h1>
+  <p>Everything you need to know about SuperSwap</p>
+</div>
+
+<div class="content">
+
+<!-- GETTING STARTED -->
+<h2><span class="section-icon">🚀</span> Getting Started</h2>
+
+<h3>Sign Up</h3>
+<ol>
+  <li>Open SuperSwap and tap <strong>"Request Access"</strong></li>
+  <li>Enter your <strong>Invite Code</strong> (get one from an existing member)</li>
+  <li>Fill in your <strong>Email</strong>, <strong>Display Name</strong>, and create a <strong>Password</strong></li>
+  <li>Tap <strong>"Submit Access Request"</strong></li>
+  <li>Wait for admin approval — you'll see a pending screen until approved</li>
+</ol>
+
+<h3>Sign In</h3>
+<ol>
+  <li>Enter your <strong>Email</strong> and <strong>Password</strong></li>
+  <li>Tap <strong>"Sign In"</strong></li>
+  <li>First time? You'll see a quick 3-step tutorial walkthrough</li>
+</ol>
+
+<h3>Forgot Password</h3>
+<ol>
+  <li>On the sign-in screen, tap <strong>"Forgot Password?"</strong></li>
+  <li>Enter your email and tap <strong>"Send Reset Link"</strong></li>
+  <li>Check your email for the reset link</li>
+</ol>
+
+<!-- NAVIGATION -->
+<h2><span class="section-icon">📱</span> Navigation</h2>
+<p>SuperSwap has 5 tabs at the bottom of the screen:</p>
+<table>
+  <tr><th>Tab</th><th>What it does</th></tr>
+  <tr><td><strong>Board</strong></td><td>Browse all flight swap listings</td></tr>
+  <tr><td><strong>Calendar</strong></td><td>View listings by date on a monthly calendar</td></tr>
+  <tr><td><strong>Sim</strong></td><td>Browse and post simulator session swaps</td></tr>
+  <tr><td><strong>Reserve</strong></td><td>Browse and post reserve month swaps</td></tr>
+  <tr><td><strong>Requests</strong></td><td>View incoming and sent swap requests</td></tr>
+</table>
+
+<!-- BOARD -->
+<h2><span class="section-icon">✈️</span> Board Tab</h2>
+<p>The Board is your main feed of available flight swaps.</p>
+
+<h3>Browsing Listings</h3>
+<ul>
+  <li>Scroll through flight swap listings from others in your role and fleet</li>
+  <li>Each card shows: flight number, route, date, fleet, and status</li>
+  <li>Tap any listing to see full details</li>
+  <li>Use <strong>sort</strong> options: Newest, Soonest, Expiring, By Fleet</li>
+  <li>Use <strong>status filters</strong>: All, New, Active, Expiring Soon</li>
+  <li>Use the <strong>search bar</strong> to find specific flights or routes</li>
+  <li>Tap <strong>"Load More"</strong> at the bottom to load additional listings</li>
+</ul>
+
+<h3>Posting a Flight Swap</h3>
+<ol>
+  <li>Tap <strong>"+ Post Swap"</strong> in the header</li>
+  <li>Enter flight details:
+    <ul>
+      <li>Flight number (auto-lookup finds the route)</li>
+      <li>Origin and destination</li>
+      <li>Date, fleet, and role</li>
+      <li>Swap preferences (any, specific region, exclusions)</li>
+      <li>Whether you have standby before the flight</li>
+      <li>Optional notes</li>
+    </ul>
+  </li>
+  <li>Review and tap <strong>"Post Listing"</strong></li>
+</ol>
+
+<h3>Proposing a Swap</h3>
+<ol>
+  <li>Tap on someone else's listing to open details</li>
+  <li>Tap <strong>"Propose a Swap"</strong></li>
+  <li>Choose your offer:
+    <ul>
+      <li><strong>My Flights</strong> — pick from your posted listings</li>
+      <li><strong>My Sims</strong> — offer a sim session instead</li>
+      <li><strong>Manual</strong> — enter flight details manually</li>
+    </ul>
+  </li>
+  <li>Review the side-by-side comparison</li>
+  <li>Add an optional message</li>
+  <li>Tap <strong>"Send Swap Request"</strong></li>
+</ol>
+
+<div class="tip">
+  <strong>Tip:</strong> You can offer a sim session in exchange for a flight — use the "My Sims" tab in the propose screen.
+</div>
+
+<h3>Managing Your Listings</h3>
+<ul>
+  <li>Tap your <strong>display name</strong> in the header to open the menu</li>
+  <li>Tap <strong>"My Listings"</strong> to see all your posted swaps</li>
+  <li>From there you can:
+    <ul>
+      <li><strong>Mark as Complete</strong> — removes the listing when the swap is done</li>
+      <li><strong>Delete</strong> — permanently removes the listing</li>
+    </ul>
+  </li>
+</ul>
+
+<!-- CALENDAR -->
+<h2><span class="section-icon">📅</span> Calendar Tab</h2>
+<p>A monthly calendar view of all available listings.</p>
+
+<h3>Using the Calendar</h3>
+<ul>
+  <li>Tap the <strong>arrows</strong> to navigate between months</li>
+  <li>Days with listings show <strong>colored dots</strong> (by fleet) and a count badge</li>
+  <li>Tap any day to open the <strong>bottom sheet</strong> with that day's listings</li>
+  <li>The calendar stays fixed while you browse — no scrolling past it</li>
+</ul>
+
+<h3>Bottom Sheet</h3>
+<ul>
+  <li>Shows all flight swaps and sim sessions for the selected day</li>
+  <li><strong>Tap the red handle</strong> at the top to expand to full screen</li>
+  <li><strong>Tap X</strong> to close the sheet</li>
+  <li>Tap any listing to view its full details</li>
+</ul>
+
+<h3>Monthly Summary</h3>
+<p>When no day is selected, you'll see:</p>
+<ul>
+  <li><strong>Quick stats</strong>: total flights, sims, and active days this month</li>
+  <li><strong>Upcoming This Month</strong>: next dates with listings — tap to jump to that day</li>
+</ul>
+
+<!-- SIM -->
+<h2><span class="section-icon">🖥️</span> Sim Tab</h2>
+<p>Browse and manage simulator session swaps.</p>
+
+<h3>Browsing Sim Sessions</h3>
+<ul>
+  <li>View available sim sessions filtered by your role and fleet</li>
+  <li>Each card shows: sim type (LOS, OPC, PC, CMD, TYPE), date, time slot, fleet</li>
+  <li>Tap any session for full details</li>
+</ul>
+
+<h3>Posting a Sim Session</h3>
+<ol>
+  <li>Tap <strong>"+ Post Sim"</strong></li>
+  <li>Enter sim type, date, time slot, fleet, sim center, and optional notes</li>
+  <li>Tap <strong>"Post Sim Session"</strong></li>
+</ol>
+
+<h3>Proposing a Sim Swap</h3>
+<ol>
+  <li>Tap on someone else's sim session</li>
+  <li>Tap <strong>"Propose Swap"</strong></li>
+  <li>Choose to offer one of your flights or sim sessions</li>
+  <li>Review the comparison and send</li>
+</ol>
+
+<!-- RESERVE -->
+<h2><span class="section-icon">📋</span> Reserve Tab</h2>
+<p>Post and browse reserve month swaps.</p>
+
+<h3>Browsing Reserve Listings</h3>
+<ul>
+  <li>View reserve months posted by others in your role and fleet</li>
+  <li>Each card shows: month, start date, fleet, and preferred swap months</li>
+</ul>
+
+<h3>Posting a Reserve Month</h3>
+<ol>
+  <li>Tap <strong>"+ Post Reserve"</strong></li>
+  <li>Enter reserve month, year, start date, fleet, preferred swap months, and optional notes</li>
+  <li>Tap <strong>"Post Reserve Listing"</strong></li>
+</ol>
+
+<h3>Proposing a Reserve Swap</h3>
+<ol>
+  <li>Tap on someone else's reserve listing</li>
+  <li>Tap <strong>"Propose Swap"</strong></li>
+  <li>Select one of your reserve months to offer</li>
+  <li>Review the comparison and send</li>
+</ol>
+
+<!-- REQUESTS -->
+<h2><span class="section-icon">🔔</span> Requests Tab</h2>
+<p>Manage all your swap requests — incoming and sent.</p>
+
+<h3>Incoming Requests</h3>
+<ul>
+  <li>Requests from others who want to swap with your listings</li>
+  <li>Tap to expand and see the full comparison</li>
+  <li><strong>Accept</strong> — reveals the other person's ID so you can coordinate</li>
+  <li><strong>Decline</strong> — removes the request</li>
+</ul>
+
+<h3>Sent Requests</h3>
+<ul>
+  <li>Requests you've sent to others</li>
+  <li>Track their status (Pending, Accepted, Declined)</li>
+  <li><strong>Cancel Request</strong> — withdraws your request</li>
+</ul>
+
+<h3>Request Types</h3>
+<p>Each request card shows a badge indicating the type:</p>
+<ul>
+  <li>Flight swaps (default)</li>
+  <li><span class="badge badge-blue">Sim Swap</span> — sim session exchange</li>
+  <li><span class="badge badge-gold">Reserve Swap</span> — reserve month exchange</li>
+</ul>
+
+<!-- PROFILE -->
+<h2><span class="section-icon">⚙️</span> Profile &amp; Settings</h2>
+<p>Tap your <strong>display name</strong> in the header to access:</p>
+<table>
+  <tr><th>Option</th><th>What it does</th></tr>
+  <tr><td><strong>My Profile</strong></td><td>View and edit your profile details</td></tr>
+  <tr><td><strong>My Listings</strong></td><td>See all your posted swaps across flights, sims, and reserves</td></tr>
+  <tr><td><strong>Change Password</strong></td><td>Update your password</td></tr>
+  <tr><td><strong>Report an Issue</strong></td><td>Send a bug report or feedback</td></tr>
+  <tr><td><strong>Delete Account</strong></td><td>Permanently delete your account and all data</td></tr>
+  <tr><td><strong>Sign Out</strong></td><td>Log out of the app</td></tr>
+</table>
+
+<!-- PRIVACY -->
+<h2><span class="section-icon">🔒</span> Privacy &amp; Security</h2>
+<div class="privacy-box">
+  <ul>
+    <li><strong>Anonymous listings</strong> — Your ID is hidden on all listings. It's only revealed to the other person when a swap is accepted.</li>
+    <li><strong>Screenshot blocking</strong> — Screenshots are blocked to protect privacy. Attempting a screenshot will show a warning screen.</li>
+    <li><strong>Immediate data deletion</strong> — When a swap is completed or a request is accepted/declined, the data is permanently deleted. No retention period.</li>
+    <li><strong>Role &amp; fleet isolation</strong> — You can only see listings from your own role and fleet. This is enforced at the database level.</li>
+    <li><strong>Encrypted</strong> — All data transmission uses HTTPS/TLS encryption.</li>
+  </ul>
+</div>
+
+<!-- TIPS -->
+<h2><span class="section-icon">💡</span> Tips</h2>
+<ul>
+  <li><strong>Post early</strong> — Listings with more time before expiry get more visibility</li>
+  <li><strong>Add notes</strong> — Help others understand your preferences and flexibility</li>
+  <li><strong>Check requests regularly</strong> — The Requests tab shows a red badge when you have unread incoming requests</li>
+  <li><strong>Use the calendar</strong> — Quickly find swaps for specific dates instead of scrolling the board</li>
+  <li><strong>Pull to refresh</strong> — Tap "Tap to refresh" at the top to get the latest listings</li>
+</ul>
+
+<div class="tip">
+  <strong>Need help?</strong> Email us at <a href="mailto:nadim@superswapp.com" style="color:#C8111A">nadim@superswapp.com</a> or use the Report feature in the app menu.
+</div>
+
+</div>
+
+<div class="footer">
+  <a href="/">Home</a> &nbsp;·&nbsp;
+  <a href="/privacy">Privacy Policy</a> &nbsp;·&nbsp;
+  <a href="/terms">Terms of Service</a>
+  <p style="margin-top: 12px">&copy; 2026 SuperSwap</p>
+</div>
+
+</body>
+</html>
