@@ -6,64 +6,106 @@
 <title>SuperSwap — Shift Swap Coordination</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #C8111A; color: #fff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 16px; }
-  .card { background: rgba(255,255,255,0.08); backdrop-filter: blur(20px); border-radius: 24px; padding: 48px 36px; max-width: 520px; width: 90%; text-align: center; border: 1px solid rgba(255,255,255,0.12); }
-  h1 { font-size: 28px; font-weight: 800; letter-spacing: 3px; margin-bottom: 8px; }
-  h2 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
-  .sub { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 32px; line-height: 1.6; }
-  .icon { font-size: 48px; margin-bottom: 20px; }
-  .btn { display: inline-block; background: #fff; color: #C8111A; padding: 14px 32px; border-radius: 30px; font-size: 14px; font-weight: 700; text-decoration: none; letter-spacing: 0.5px; }
-  .divider { width: 60px; height: 1px; background: rgba(255,255,255,0.15); margin: 32px auto; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #C8111A; color: #fff; min-height: 100vh; padding: 0; }
 
-  /* Support Section */
-  .support { text-align: left; margin-top: 8px; }
-  .support p { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.8; }
-  .email-link { color: #fff; font-weight: 600; }
+  /* Hero */
+  .hero { text-align: center; padding: 56px 20px 40px; }
+  .hero-icon { font-size: 56px; margin-bottom: 16px; }
+  .hero h1 { font-size: 32px; font-weight: 800; letter-spacing: 4px; margin-bottom: 10px; }
+  .hero p { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.6; max-width: 340px; margin: 0 auto 28px; }
+  .hero .btn { display: inline-block; background: #fff; color: #C8111A; padding: 15px 36px; border-radius: 30px; font-size: 15px; font-weight: 700; text-decoration: none; letter-spacing: 0.5px; }
+  .hero .btn:hover { opacity: 0.95; }
+
+  /* Nav cards */
+  .nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 480px; margin: 0 auto; padding: 0 20px 40px; }
+  .nav-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 24px 16px; text-align: center; text-decoration: none; color: #fff; transition: transform 0.2s, background 0.2s; }
+  .nav-card:hover { transform: translateY(-2px); background: rgba(255,255,255,0.15); }
+  .nav-card .card-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+  .nav-card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .nav-card .card-desc { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+  .nav-card-full { grid-column: 1 / -1; }
+
+  /* Sections */
+  .section { max-width: 480px; margin: 0 auto; padding: 0 20px 32px; }
+  .section-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 16px; }
+
+  /* Support card */
+  .support-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 24px; text-align: left; }
+  .support-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .support-card p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 16px; }
+  .email-btn { display: inline-block; background: #fff; color: #C8111A; padding: 10px 24px; border-radius: 24px; font-size: 13px; font-weight: 700; text-decoration: none; }
 
   /* FAQ */
-  .faq { text-align: left; margin: 20px 0; }
-  .faq details { margin-bottom: 10px; }
-  .faq summary { font-size: 14px; font-weight: 600; cursor: pointer; padding: 8px 0; }
-  .faq p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.7; padding: 4px 0 8px 12px; }
+  .faq { text-align: left; }
+  .faq details { margin-bottom: 8px; background: rgba(255,255,255,0.06); border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); }
+  .faq summary { font-size: 14px; font-weight: 600; cursor: pointer; padding: 14px 16px; }
+  .faq p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.7; padding: 0 16px 14px; }
 
   /* Contact Form */
-  .form-section { margin-top: 24px; text-align: left; }
-  .form-section label { font-size: 13px; font-weight: 600; display: block; margin-bottom: 6px; margin-top: 14px; }
+  .form-section { text-align: left; }
+  .form-section label { font-size: 12px; font-weight: 600; display: block; margin-bottom: 6px; margin-top: 14px; color: rgba(255,255,255,0.7); }
   .form-section input,
-  .form-section textarea { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: #fff; font-family: inherit; font-size: 14px; outline: none; }
+  .form-section textarea { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.08); color: #fff; font-family: inherit; font-size: 14px; outline: none; }
   .form-section input::placeholder,
-  .form-section textarea::placeholder { color: rgba(255,255,255,0.4); }
+  .form-section textarea::placeholder { color: rgba(255,255,255,0.3); }
   .form-section input:focus,
-  .form-section textarea:focus { border-color: rgba(255,255,255,0.5); }
+  .form-section textarea:focus { border-color: rgba(255,255,255,0.4); }
   .form-section textarea { resize: vertical; min-height: 100px; }
   .submit-btn { display: inline-block; background: #fff; color: #C8111A; padding: 12px 28px; border-radius: 30px; font-size: 14px; font-weight: 700; border: none; cursor: pointer; letter-spacing: 0.5px; margin-top: 18px; width: 100%; }
   .submit-btn:hover { opacity: 0.9; }
-
-  /* Success message */
   .form-success { display: none; text-align: center; padding: 20px 0; }
   .form-success p { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.8; }
 
-  .links { margin-top: 32px; font-size: 12px; }
-  .links a { color: rgba(255,255,255,0.5); text-decoration: underline; margin: 0 10px; }
+  /* Footer */
+  .footer { text-align: center; padding: 32px 20px 48px; font-size: 11px; color: rgba(255,255,255,0.3); }
+  .footer a { color: rgba(255,255,255,0.4); text-decoration: none; margin: 0 8px; }
+  .footer a:hover { color: #fff; }
+  .footer .copy { margin-top: 12px; }
 </style>
 </head>
 <body>
-<div class="card">
-  <div class="icon">✈</div>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-icon">✈</div>
   <h1>SUPERSWAP</h1>
-  <p class="sub">Shift scheduling and swap coordination.<br>Available on iOS and Android.</p>
+  <p>Shift scheduling and swap coordination.<br>Available on iOS and Android.</p>
   <a class="btn" href="#">Download the App</a>
+</div>
 
-  <div class="divider"></div>
+<!-- Navigation Cards -->
+<div class="nav-grid">
+  <a class="nav-card nav-card-full" href="/guide">
+    <span class="card-icon">📖</span>
+    <div class="card-title">User Guide</div>
+    <div class="card-desc">Step-by-step tutorial on how to use SuperSwap</div>
+  </a>
+  <a class="nav-card" href="/privacy">
+    <span class="card-icon">🔒</span>
+    <div class="card-title">Privacy Policy</div>
+    <div class="card-desc">How we handle your data</div>
+  </a>
+  <a class="nav-card" href="/terms">
+    <span class="card-icon">📄</span>
+    <div class="card-title">Terms of Service</div>
+    <div class="card-desc">Usage terms and conditions</div>
+  </a>
+</div>
 
-  <!-- Support Section -->
-  <div class="support">
-    <h2>Support</h2>
-    <p>Need help with SuperSwap? Use the form below or email us directly at <a class="email-link" href="mailto:nadim@superswapp.com">nadim@superswapp.com</a>. We typically respond within 24 hours.</p>
+<!-- Support -->
+<div class="section">
+  <div class="section-title">Support</div>
+  <div class="support-card">
+    <h3>Need help?</h3>
+    <p>Use the form below or email us directly. We typically respond within 24 hours.</p>
+    <a class="email-btn" href="mailto:nadim@superswapp.com">nadim@superswapp.com</a>
   </div>
+</div>
 
+<!-- FAQ -->
+<div class="section">
+  <div class="section-title">Frequently Asked Questions</div>
   <div class="faq">
-    <h2>FAQ</h2>
     <details>
       <summary>What is SuperSwap?</summary>
       <p>SuperSwap is a scheduling coordination tool that allows users to view, request, and manage shift swaps easily.</p>
@@ -81,36 +123,39 @@
       <p>Yes, SuperSwap is completely free to download and use. There are no in-app purchases or subscription fees.</p>
     </details>
   </div>
+</div>
 
-  <div class="divider"></div>
-
-  <!-- Contact Form -->
-  <div class="form-section" id="contactForm">
-    <h2>Contact Us</h2>
-    <form action="https://formsubmit.co/nadim@superswapp.com" method="POST">
-      <input type="hidden" name="_subject" value="SuperSwap Support Request">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_next" value="https://superswapp.com?sent=1">
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" placeholder="Your name" required>
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="Your email" required>
-      <label for="message">Message</label>
-      <textarea id="message" name="message" placeholder="How can we help?" required></textarea>
-      <button type="submit" class="submit-btn">Send Message</button>
-    </form>
+<!-- Contact Form -->
+<div class="section">
+  <div class="section-title">Contact Us</div>
+  <div class="support-card">
+    <div class="form-section" id="contactForm">
+      <form action="https://formsubmit.co/nadim@superswapp.com" method="POST">
+        <input type="hidden" name="_subject" value="SuperSwap Support Request">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://superswapp.com?sent=1">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Your name" required>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Your email" required>
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="How can we help?" required></textarea>
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+    </div>
+    <div class="form-success" id="formSuccess">
+      <h3>Message Sent</h3>
+      <p>Thank you for reaching out. We'll get back to you within 24 hours.</p>
+    </div>
   </div>
+</div>
 
-  <div class="form-success" id="formSuccess">
-    <h2>Message Sent</h2>
-    <p>Thank you for reaching out. We'll get back to you within 24 hours.</p>
-  </div>
-
-  <div class="links">
-    <a href="/guide">User Guide</a>
-    <a href="/privacy">Privacy Policy</a>
-    <a href="/terms">Terms of Service</a>
-  </div>
+<!-- Footer -->
+<div class="footer">
+  <a href="/guide">User Guide</a>
+  <a href="/privacy">Privacy Policy</a>
+  <a href="/terms">Terms of Service</a>
+  <div class="copy">&copy; 2026 SuperSwap</div>
 </div>
 
 <script>
