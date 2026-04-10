@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SuperSwap — Confirming Email</title>
+<title>SuperSwap — Account</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f4f2; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
@@ -12,92 +12,198 @@
   .icon-success { background: #1A6840; }
   .icon-loading { background: #C8111A; }
   .icon-error { background: #B45A00; }
+  .icon-reset { background: #0B1D38; }
   h1 { font-size: 22px; font-weight: 700; color: #111; margin-bottom: 8px; }
   p { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 24px; }
-  .btn { display: inline-block; background: #C8111A; color: #fff; padding: 14px 32px; border-radius: 30px; font-size: 14px; font-weight: 700; text-decoration: none; }
+  .btn { display: inline-block; background: #C8111A; color: #fff; padding: 14px 32px; border-radius: 30px; font-size: 14px; font-weight: 700; text-decoration: none; border: none; cursor: pointer; width: 100%; }
+  .btn:hover { opacity: 0.95; }
+  .btn-outline { background: transparent; border: 1.5px solid #ddd; color: #666; margin-top: 12px; }
   .spinner { animation: spin 1s linear infinite; display: inline-block; }
   @keyframes spin { to { transform: rotate(360deg); } }
+  .input { width: 100%; padding: 14px 16px; border-radius: 12px; border: 1.5px solid #e0e0e0; font-size: 14px; font-family: inherit; outline: none; margin-bottom: 12px; text-align: left; }
+  .input:focus { border-color: #C8111A; }
+  .error-text { color: #C8111A; font-size: 12px; margin-bottom: 12px; text-align: left; }
+  .success-text { color: #1A6840; font-size: 12px; margin-bottom: 12px; }
+  label { display: block; font-size: 12px; font-weight: 600; color: #444; margin-bottom: 6px; text-align: left; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 <div class="card">
-  <div class="icon icon-loading" id="iconEl"><span class="spinner">✈</span></div>
-  <h1 id="status">Confirming your email...</h1>
-  <p id="msg">Please wait while we verify your account.</p>
-  <a class="btn" href="/" id="btnEl" style="display:none">Back to SuperSwap</a>
+  <!-- Loading state -->
+  <div id="loading">
+    <div class="icon icon-loading"><span class="spinner">✈</span></div>
+    <h1>Processing...</h1>
+    <p>Please wait while we verify your request.</p>
+  </div>
+
+  <!-- Email confirmed -->
+  <div id="confirmed" style="display:none">
+    <div class="icon icon-success">✓</div>
+    <h1>Email Confirmed!</h1>
+    <p>Your email has been verified. You can now open the SuperSwap app and sign in. Your account is pending admin approval.</p>
+    <a class="btn" href="/">Back to SuperSwap</a>
+  </div>
+
+  <!-- Password reset form -->
+  <div id="resetForm" style="display:none">
+    <div class="icon icon-reset">🔒</div>
+    <h1>Reset Password</h1>
+    <p>Enter your new password below.</p>
+    <div id="resetError" class="error-text" style="display:none"></div>
+    <label for="newPass">New Password</label>
+    <input type="password" id="newPass" class="input" placeholder="At least 6 characters">
+    <label for="confirmPass">Confirm Password</label>
+    <input type="password" id="confirmPass" class="input" placeholder="Repeat password">
+    <button class="btn" id="resetBtn" onclick="resetPassword()">Update Password</button>
+  </div>
+
+  <!-- Password reset success -->
+  <div id="resetSuccess" style="display:none">
+    <div class="icon icon-success">✓</div>
+    <h1>Password Updated!</h1>
+    <p>Your password has been changed successfully. You can now open the SuperSwap app and sign in with your new password.</p>
+    <a class="btn" href="/">Back to SuperSwap</a>
+  </div>
+
+  <!-- Error state -->
+  <div id="errorState" style="display:none">
+    <div class="icon icon-error">!</div>
+    <h1 id="errorTitle">Something went wrong</h1>
+    <p id="errorMsg">The link may have expired. Please try again.</p>
+    <a class="btn" href="/">Back to SuperSwap</a>
+  </div>
 </div>
 
 <script>
-(async function() {
-  const SUPABASE_URL = "https://xfagyunaxbnkcwtufykl.supabase.co";
-  const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmYWd5dW5heGJua2N3dHVmeWtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3MDE0ODEsImV4cCI6MjA5MDI3NzQ4MX0.1jVOqNflE7CnhOWHyTG_V5mgy2HG6JUAl4Dz8vmL9yk";
+const SUPABASE_URL = "https://xfagyunaxbnkcwtufykl.supabase.co";
+const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmYWd5dW5heGJua2N3dHVmeWtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3MDE0ODEsImV4cCI6MjA5MDI3NzQ4MX0.1jVOqNflE7CnhOWHyTG_V5mgy2HG6JUAl4Dz8vmL9yk";
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-  const iconEl = document.getElementById('iconEl');
-  const statusEl = document.getElementById('status');
-  const msgEl = document.getElementById('msg');
-  const btnEl = document.getElementById('btnEl');
+function show(id) {
+  ['loading','confirmed','resetForm','resetSuccess','errorState'].forEach(function(s) {
+    document.getElementById(s).style.display = s === id ? 'block' : 'none';
+  });
+}
 
-  function showSuccess() {
-    iconEl.className = 'icon icon-success';
-    iconEl.innerHTML = '✓';
-    statusEl.textContent = 'Email Confirmed!';
-    msgEl.textContent = 'Your email has been verified. You can now open the SuperSwap app and sign in. Your account is pending admin approval.';
-    btnEl.style.display = 'inline-block';
+function showError(title, msg) {
+  document.getElementById('errorTitle').textContent = title || 'Something went wrong';
+  document.getElementById('errorMsg').textContent = msg || 'The link may have expired. Please try again.';
+  show('errorState');
+}
+
+async function resetPassword() {
+  var newPass = document.getElementById('newPass').value;
+  var confirmPass = document.getElementById('confirmPass').value;
+  var errEl = document.getElementById('resetError');
+
+  errEl.style.display = 'none';
+
+  if (newPass.length < 6) {
+    errEl.textContent = 'Password must be at least 6 characters.';
+    errEl.style.display = 'block';
+    return;
+  }
+  if (newPass !== confirmPass) {
+    errEl.textContent = 'Passwords do not match.';
+    errEl.style.display = 'block';
+    return;
   }
 
-  function showError(msg) {
-    iconEl.className = 'icon icon-error';
-    iconEl.innerHTML = '!';
-    statusEl.textContent = 'Confirmation Failed';
-    msgEl.textContent = msg || 'The confirmation link may have expired. Please try signing up again.';
-    btnEl.style.display = 'inline-block';
-    btnEl.textContent = 'Back to SuperSwap';
-  }
+  document.getElementById('resetBtn').textContent = 'Updating...';
+  document.getElementById('resetBtn').disabled = true;
 
   try {
-    // Supabase sends tokens in the URL hash or as query params
-    // Format: #access_token=xxx&refresh_token=xxx&type=signup
-    // Or: ?token=xxx&type=signup
-    const hash = window.location.hash.substring(1);
-    const params = new URLSearchParams(hash || window.location.search);
+    var result = await sb.auth.updateUser({ password: newPass });
+    if (result.error) {
+      errEl.textContent = result.error.message;
+      errEl.style.display = 'block';
+      document.getElementById('resetBtn').textContent = 'Update Password';
+      document.getElementById('resetBtn').disabled = false;
+    } else {
+      show('resetSuccess');
+    }
+  } catch(e) {
+    errEl.textContent = 'Connection error. Please try again.';
+    errEl.style.display = 'block';
+    document.getElementById('resetBtn').textContent = 'Update Password';
+    document.getElementById('resetBtn').disabled = false;
+  }
+}
 
-    const accessToken = params.get('access_token');
-    const refreshToken = params.get('refresh_token');
-    const type = params.get('type');
-    const tokenHash = params.get('token_hash');
-    const token = params.get('token');
+(async function() {
+  try {
+    var hash = window.location.hash.substring(1);
+    var params = new URLSearchParams(hash || window.location.search);
 
+    var accessToken = params.get('access_token');
+    var refreshToken = params.get('refresh_token');
+    var type = params.get('type');
+    var tokenHash = params.get('token_hash');
+    var token = params.get('token');
+    var errorParam = params.get('error');
+    var errorDesc = params.get('error_description');
+
+    // Handle error from Supabase
+    if (errorParam) {
+      showError('Link Expired', errorDesc || 'This link has expired. Please request a new one from the app.');
+      return;
+    }
+
+    // Password recovery flow
+    if (type === 'recovery') {
+      if (accessToken) {
+        var result = await sb.auth.setSession({
+          access_token: accessToken,
+          refresh_token: refreshToken || '',
+        });
+        if (result.error) {
+          showError('Link Expired', 'This reset link has expired. Please request a new one from the app.');
+        } else {
+          show('resetForm');
+        }
+      } else if (tokenHash || token) {
+        var result2 = await sb.auth.verifyOtp({
+          token_hash: tokenHash || token,
+          type: 'recovery',
+        });
+        if (result2.error) {
+          showError('Link Expired', 'This reset link has expired. Please request a new one from the app.');
+        } else {
+          show('resetForm');
+        }
+      } else {
+        showError('Invalid Link', 'No reset token found. Please use the link from your email.');
+      }
+      return;
+    }
+
+    // Email confirmation flow
     if (accessToken) {
-      // Token-based confirmation (already confirmed by Supabase redirect)
-      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
-      const { data, error } = await sb.auth.setSession({
+      var result3 = await sb.auth.setSession({
         access_token: accessToken,
         refresh_token: refreshToken || '',
       });
-      if (error) {
-        showError(error.message);
+      if (result3.error) {
+        showError('Confirmation Failed', result3.error.message);
       } else {
-        showSuccess();
+        show('confirmed');
       }
     } else if (tokenHash || token) {
-      // OTP/magic link style confirmation
-      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
-      const { data, error } = await sb.auth.verifyOtp({
+      var result4 = await sb.auth.verifyOtp({
         token_hash: tokenHash || token,
         type: type || 'email',
       });
-      if (error) {
-        showError(error.message);
+      if (result4.error) {
+        showError('Confirmation Failed', result4.error.message);
       } else {
-        showSuccess();
+        show('confirmed');
       }
     } else {
-      // No token found — maybe direct visit
-      showError('No confirmation token found. Please use the link from your email.');
+      showError('Invalid Link', 'No confirmation token found. Please use the link from your email.');
     }
   } catch (err) {
-    showError('An error occurred: ' + err.message);
+    showError('Error', 'An error occurred: ' + err.message);
   }
 })();
 </script>
